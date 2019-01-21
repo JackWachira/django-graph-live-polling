@@ -105,3 +105,9 @@ venv.bak/
 
 #vs code
 .vscode/*
+
+#pid
+*.pid
+
+#db
+*.db
