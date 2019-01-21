@@ -1,4 +1,3 @@
-import json
 import random
 
 from channels import Group
@@ -14,6 +13,8 @@ class PointsBinding(ResourceBinding):
     def publish(self, pk, data=None, **kwargs):
         """Adds the channel to the group so as
         to start receiving the messages
+
+        Returns: first point
         """
 
         Group('random-points').add(self.message.reply_channel)
