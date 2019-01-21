@@ -1,0 +1,59 @@
+<html>
+
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+    function rand() {
+        return Math.random();
+    }
+    // Initialize graph as we wait for data
+    $(document).ready(function () {
+        Plotly.plot('graph', [{
+            y: [1, 2, 3].map(rand)
+        }, {
+            y: [1, 2, 3].map(rand)
+        }]);
+    });
+    ws = new WebSocket("ws://localhost:8000/")
+    var request_data_interval
+    ws.onopen = function () {
+        var msg = {
+            stream: "points",
+            payload: {
+                action: "publish"
+            }
+        }
+        ws.send(JSON.stringify(msg));
+    };
+
+    ws.onmessage = function (evt) {
+        var received_msg = evt.data;
+        data = JSON.parse(evt.data);
+        var my_plot = {
+            x: data.x,
+            y: data.y,
+            type: 'graph',
+        };
+        if ('payload' in data) {
+            data = data['payload']['data']['text'];
+            Plotly.extendTraces('graph', {
+                y: [[data.y], [data.x]]
+            }, [0, 1])
+        } else {
+            Plotly.extendTraces('graph', {
+                y: [[data.y], [data.x]]
+            }, [0, 1])
+        }
+    };
+    ws.onclose = function () {
+        window.clearInterval(request_data_interval)
+    };
+
+</script>
+
+<body>
+</body>
+<div id="graph">
+
+</html>

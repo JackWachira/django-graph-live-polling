@@ -1,3 +1,6 @@
+import json
+import random
+
 from channels import Group
 from channels_api.bindings import ResourceBinding
 from channels_api.decorators import detail_action
@@ -15,4 +18,8 @@ class PointsBinding(ResourceBinding):
 
         Group('random-points').add(self.message.reply_channel)
         self.message.channel_session['random-points'] = 'random-points'
-        return {'action': 'subscribed'}, 200
+        points = {
+            'x': random.random(),
+            'y': random.random()
+        }
+        return {'text': points}, 200
