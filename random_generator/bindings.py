@@ -1,12 +1,11 @@
 from channels_api.bindings import ResourceBinding
-
-from .models import Point
-from .serializers import PointsSerializer
+from channels_api.decorators import detail_action
 
 
 class PointsBinding(ResourceBinding):
-
-    model = Point
     stream = "points"
-    serializer_class = PointsSerializer
-    queryset = Point.objects.all()
+    model = None
+
+    @detail_action()
+    def publish(self, pk, data=None, **kwargs):
+        return {'action': 'action'}, 200
