@@ -1,3 +1,5 @@
-channels_api==0.4.1
+channels_api==0.4.1 #installs django, restframework
 asgi-redis==1.4.3
 python-decouple==3.1
+celery==4.2.1
+flower==0.9.2

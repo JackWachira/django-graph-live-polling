@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'channels_api',
-    'random_generator'
+    'random_generator',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +137,5 @@ CHANNEL_LAYERS = {
         'ROUTING': 'django_graph.routing.channel_routing',
     },
 }
+
+CELERY_IMPORTS = ('random_generator.tasks',)

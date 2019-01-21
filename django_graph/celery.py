@@ -5,7 +5,7 @@ from django.conf import settings
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'random_generator.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_graph.settings')
 
 app = Celery('random_generator', broker=config(
     'REDISCLOUD_URL', default='redis://localhost:6379'))
